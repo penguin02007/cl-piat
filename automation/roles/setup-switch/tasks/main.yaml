@@ -1,0 +1,63 @@
+---
+- name: Set IPv4 L4 hashing
+  sysctl:
+    name: net.ipv4.fib_multipath_hash_policy
+    value: 1
+    state: present
+    reload: yes
+
+- name: Configured NTP in management VRF
+  command: "{{item}}"
+  with_items:
+    - systemctl stop ntp.service
+    - systemctl disable ntp.service
+    - systemctl enable ntp@mgmt
+    - systemctl start ntp@mgmt
+
+- name: Remove NetQ1.4 
+  apt:
+    name: ['cumulus-netq','netq-agent','netq-apps']
+    state: absent
+
+- name: Add Cumulus Apt Key
+  apt_key:
+    url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
+    state: present
+
+- name: Add Cumulus Repo
+  apt_repository:
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-2.0 
+    state: present
+    update_cache: no
+
+- name: Install NetQ2.0
+  apt:
+    name: cumulus-netq
+    update_cache: yes
+
+- name: copy netq config file
+  copy:
+    src: netq20.yml
+    dest: /etc/netq/config.d/netq-overwrite.yml 
+
+#- name: copy netq config file
+#  copy:
+#    src: netq14.yml
+#    dest: /etc/netq/netq.yml 
+
+- name: Configure NetQ in management VRF
+  command: "{{item}}"
+  with_items:
+    - systemctl stop netqd.service
+    - systemctl disable netqd.service
+    - systemctl stop netq-agent.service
+    - systemctl disable netq-agent.service
+    - systemctl enable netqd@mgmt
+    - systemctl start netqd@mgmt
+    - systemctl enable netq-agent@mgmt
+    - systemctl start netq-agent@mgmt
+
+- name: Restart Rsyslog
+  service:
+    name: rsyslog
+    state: restarted

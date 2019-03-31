@@ -1,0 +1,46 @@
+# Created by Topology-Converter v4.6.8
+#    Template Revision: v4.6.8
+#    https://github.com/cumulusnetworks/topology_converter
+#    using topology data from: cl-piat.dot
+
+[leafs-rack1]
+leaf02 ansible_host=192.168.0.12
+leaf01 ansible_host=192.168.0.11
+
+[servers-rack1]
+server01 ansible_host=192.168.0.31
+server02 ansible_host=192.168.0.32
+
+[leafs-rack2]
+leaf03 ansible_host=192.168.0.13
+leaf04 ansible_host=192.168.0.14
+
+[servers-rack2]
+server03 ansible_host=192.168.0.32
+server04 ansible_host=192.168.0.34
+
+[spines]
+spine02 ansible_host=192.168.0.22
+spine01 ansible_host=192.168.0.21
+
+[netq-ts]
+localhost ansible_connection=local
+
+[oob]
+localhost ansible_connection=local
+
+[leafs:children]
+leafs-rack1
+leafs-rack2
+
+[servers:children]
+servers-rack1
+servers-rack2
+
+[network:children]
+leafs
+spines
+
+[all:vars]
+ansible_user=cumulus
+ansible_ssh_pass=CumulusLinux!

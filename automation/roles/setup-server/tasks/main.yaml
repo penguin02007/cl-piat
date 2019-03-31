@@ -1,0 +1,155 @@
+---
+- apt_repository:
+    repo: ppa:ansible/ansible 
+
+- name: Install additional host packages
+  apt:
+    name: ['ansible','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd','libjson-c3','traceroute'] 
+    update_cache: yes
+    state: present
+
+- name: Correct LLDP Settings
+  lineinfile:
+    dest: /etc/lldpd.d/port_info.conf
+    line: "configure lldp portidsubtype ifname"
+    create: yes
+  notify: restart LLDP
+
+- name: Apply LLDP Settings
+  meta: flush_handlers
+
+- name: Install python packages for ifupdown2
+  apt: 
+    name: ['python2.7','python-argcomplete','python-ipaddr']
+    state: present
+
+
+- name: Remove ifupdown1 and netplan
+  apt: 
+    name: ['ifupdown','ifenslave','netplan.io']
+    state: absent
+
+- name: Disable systemd-resolved
+  systemd:
+    name: systemd-resolved.service
+    state: stopped
+    enabled: no
+
+- name: Remove resolve.conf
+  file:
+   path: /etc/resolv.conf
+   state: absent
+
+- name: Create resolve.conf
+  copy:
+    content: ""
+    dest: /etc/resolv.conf
+    force: no
+    group: sys
+    owner: root
+    mode: 0644
+
+- name: Add dns server
+  lineinfile:
+    path: /etc/resolv.conf
+    line: 'nameserver 192.168.200.1 # vrf mgmt'
+
+- name: Remove netplan files
+  shell: rm -vfr /usr/share/netplan /etc/netplan
+
+- name: Copy deb packages
+  copy: src={{ item }} dest=/home/cumulus/ owner=cumulus
+  with_fileglob:
+    - files/*.deb
+
+- name: Download 4.19 kernel headers
+  get_url:
+    url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.32/linux-headers-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
+    dest: /home/cumulus/linux-headers-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
+
+- name: Download 4.19 kernel headers
+  get_url:
+    url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.32/linux-headers-4.19.32-041932_4.19.32-041932.201903271306_all.deb
+    dest: /home/cumulus/linux-headers-4.19.32-041932_4.19.32-041932.201903271306_all.deb
+
+- name: Download 4.19 kernel image
+  get_url:
+    url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.32/linux-image-unsigned-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb 
+    dest: /home/cumulus/linux-image-unsigned-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
+
+- name: Download 4.19 kernel modules
+  get_url:
+    url: https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.32/linux-modules-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
+    dest: /home/cumulus/linux-modules-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
+
+- name: Install ifupdown2, Vrf tools and 4.19 kernel
+  apt: 
+    deb: "{{item}}" 
+    state: present 
+  with_items:
+    - /home/cumulus/bridge-utils_1.5-9-cl3u2_amd64.deb
+    - /home/cumulus/ifupdown2_1.2.5-1_all.deb
+    - /home/cumulus/vrf_1.3_amd64.deb
+    - /home/cumulus/mgmt-vrf_1.3_all.deb
+    - /home/cumulus/linux-headers-4.19.32-041932_4.19.32-041932.201903271306_all.deb
+    - /home/cumulus/linux-headers-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
+    - /home/cumulus/linux-modules-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
+    - /home/cumulus/linux-image-unsigned-4.19.32-041932-generic_4.19.32-041932.201903271306_amd64.deb
+
+- name: Add apt FRR apt key 
+  apt_key:
+    url: https://deb.frrouting.org/frr/keys.asc 
+    state: present
+
+- apt_repository:
+    repo: deb https://deb.frrouting.org/frr bionic frr-stable 
+    state: present
+
+- name: Install Frrouting
+  apt: 
+    name: ['frr','frr-pythontools']
+    state: present
+
+- name: Sysctl l3mdev_accept
+  sysctl:
+    name: net.ipv4.tcp_l3mdev_accept
+    value: 1
+    state: present
+    reload: yes 
+
+- name: Sysctl l3mdev_accept
+  sysctl:
+    name: net.ipv4.udp_l3mdev_accept
+    value: 1
+    state: present
+    reload: yes 
+
+- name: L4 hash policy 
+  sysctl:
+    name: net.ipv4.fib_multipath_hash_policy
+    value: 1
+    state: present
+    reload: yes 
+
+- name: Enable IPv6 
+  sysctl:
+    name: net.ipv6.conf.all.disable_ipv6
+    value: 0
+    state: present
+    reload: yes
+
+- name: Copy interfaces configuration
+  copy:
+    src: interfaces
+    dest: /etc/network/interfaces
+
+- name: Reboot system
+  reboot:
+    reboot_timeout: 1200
+    test_command: mount
+
+- name: Add dns server 
+  lineinfile:
+    path: /etc/resolv.conf 
+    line: 'nameserver 192.168.200.1 # vrf mgmt'
+...

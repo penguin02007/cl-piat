@@ -1,0 +1,13 @@
+---
+- hosts: server03,server04
+  roles:
+  - server-common
+  - openstack-compute
+  become: true
+
+- hosts: openstack-controller 
+  roles:
+  - server-common
+  - openstack-controller
+  become: true
+...

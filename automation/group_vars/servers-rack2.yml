@@ -1,0 +1,70 @@
+node:
+  server03:
+    id: 3
+    ports:
+      eth0:
+        dhcp:
+        vrf: mgmt
+      eth1:
+      eth2:
+    tenants:
+      tenant1:
+        id: 4001
+      tenant2:
+        id: 4002
+      tenant3:
+        id: 4003
+    l2domains:
+      1000:
+        prefix-id: 10
+        tenant: tenant1
+      1001:
+        prefix-id: 11
+        tenant: tenant1
+      1002:
+        prefix-id: 12
+        tenant: tenant2
+      1003:
+        prefix-id: 13
+        tenant: tenant2
+      1004:
+        prefix-id: 14
+        tenant: tenant3
+      1005:
+        prefix-id: 15
+        tenant: tenant3
+
+  server04:
+    id: 4
+    ports:
+      eth0:
+        dhcp:
+        vrf: mgmt
+      eth1:
+      eth2:
+    tenants:
+      tenant1:
+        id: 4001
+      tenant2:
+        id: 4002
+      tenant3:
+        id: 4003
+    l2domains:
+      1000:
+        prefix-id: 10
+        tenant: tenant1
+      1001:
+        prefix-id: 11
+        tenant: tenant1
+      1002:
+        prefix-id: 12
+        tenant: tenant2
+      1003:
+        prefix-id: 13
+        tenant: tenant2
+      1004:
+        prefix-id: 14
+        tenant: tenant3
+      1005:
+        prefix-id: 15
+        tenant: tenant3
