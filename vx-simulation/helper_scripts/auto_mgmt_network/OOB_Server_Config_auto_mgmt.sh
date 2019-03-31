@@ -180,7 +180,6 @@ echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/98-ipforward.conf
 
 echo " ### Creating turnup.sh script ###"
     cat <<EOT >> /home/cumulus/turnup.sh
-git clone $REPOSITORY
 EOT
 
 if [ $puppet -eq 1 ]; then
@@ -215,7 +214,7 @@ cat <<EOT >> /home/cumulus/.gitconfig
 EOT
 
 sudo su - cumulus -c '\
-git clone https://gitlab.com/packet.ninja/cl-piat.git;
+git clone https://github.com/CumulusNetworks/cl-piat.git;
 ansible-playbook /home/cumulus/cl-piat/vx-simulation/helper_scripts/install-runner-live.yaml;\
 '
 
