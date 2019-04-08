@@ -1,7 +1,7 @@
 ---
 - name: Sysctl ipv4 forward
   sysctl:
-    name: net.ipv4.ip_forward
+    name: net.ipv4.conf.all.forwarding 
     value: 1
     state: present
     reload: yes
