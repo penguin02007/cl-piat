@@ -160,6 +160,10 @@ chmod 700 /home/cumulus/.ssh/
 chmod 600 /home/cumulus/.ssh/*
 chown cumulus:cumulus /home/cumulus/.ssh/*
 
+echo " ### Setting Custom http proxy ###"
+echo -e "export http_proxy=http://pkg.proxy.prod.jp.local:10080" > /root/.bash_aliases
+echo -e " export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> /root/.bash_aliases
+
 echo "<html><h1>You've come to the OOB-MGMT-Server.</h1></html>" > /var/www/html/index.html
 
 echo "Copying Key into /var/www/html..."
