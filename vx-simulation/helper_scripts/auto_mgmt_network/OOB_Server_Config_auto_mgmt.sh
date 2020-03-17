@@ -89,9 +89,9 @@ iface eth1 inet static
     address 192.168.200.1/24
 EOT
 
-echo " ### Overwriting DNS Server to 8.8.8.8 ###"
+echo " ### Overwriting DNS Server to 100.79.223.108 ###"
 #Required because the installation of DNSmasq throws off DNS momentarily
-echo "nameserver 8.8.8.8" >> /etc/resolvconf/resolv.conf.d/head
+echo "nameserver 100.79.223.108" >> /etc/resolvconf/resolv.conf.d/head
 
 echo " ### Updating APT Repository... ###"
 apt-get update -y
