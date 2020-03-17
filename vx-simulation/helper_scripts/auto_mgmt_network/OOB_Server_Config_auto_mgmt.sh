@@ -218,6 +218,7 @@ cat <<EOT >> /home/cumulus/.gitconfig
 EOT
 
 sudo su - cumulus -c '\
+git config --global http.proxy http://pkg.proxy.prod.jp.local:10080
 git clone https://github.com/CumulusNetworks/cl-piat.git;
 ansible-playbook /home/cumulus/cl-piat/vx-simulation/helper_scripts/install-runner-live.yaml;\
 '
