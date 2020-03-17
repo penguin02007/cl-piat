@@ -93,6 +93,9 @@ echo " ### Overwriting DNS Server to 100.79.223.108 ###"
 #Required because the installation of DNSmasq throws off DNS momentarily
 echo "nameserver 100.79.223.108" >> /etc/resolvconf/resolv.conf.d/head
 
+echo -e "export http_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
+echo -e "export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
+
 echo " ### Updating APT Repository... ###"
 apt-get update -y
 
