@@ -214,8 +214,7 @@ cat <<EOT >> /home/cumulus/.gitconfig
 EOT
 
 sudo su - cumulus -c '\
-git clone https://github.com/CumulusNetworks/cl-piat.git;
-ansible-playbook /home/cumulus/cl-piat/vx-simulation/helper_scripts/install-runner-live.yaml;\
+git clone https://github.com/penguin02007/cl-piat.git;\
 '
 
 
