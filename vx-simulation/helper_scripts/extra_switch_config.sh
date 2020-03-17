@@ -4,6 +4,8 @@ echo "#################################"
 echo "  Running Extra_Switch_Config.sh"
 echo "#################################"
 sudo su
+echo -e "export http_proxy=http://pkg.proxy.prod.jp.local:10080" >> /etc/bash.bashrc
+echo -e "export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> /etc/bash.bashrc
 
 echo "retry 1;" >> /etc/dhcp/dhclient.conf
 
