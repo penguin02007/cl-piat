@@ -18,8 +18,6 @@ auto eth0
 iface eth0 inet dhcp
 
 EOT
-echo "Force DHCP renew on swp1"
-dhclient swp1
 #add line to support bonding inside virtualbox VMs
 #sed -i '/.*iface swp.*/a\    #required for traffic to flow on Bonds in Vbox VMs\n    post-up ip link set $IFACE promisc on' /etc/network/interfaces
 
