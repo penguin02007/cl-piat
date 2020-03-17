@@ -524,7 +524,7 @@ end
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
             :libvirt__tunnel_local_port => '42110',
-            :libvirt__tunnel_ip => '127.0.0.1',
+            :libvirt__tunnel_ip => '172.20.232.22',
             :libvirt__tunnel_port => '43110',
             :libvirt__iface_name => 'swp33',
             auto_config: false
