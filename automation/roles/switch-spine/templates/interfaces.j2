@@ -1,7 +1,7 @@
 # The loopback network interface
 auto lo
 iface lo inet loopback
-   address {{hostvars[inventory_hostname]["routing"]["lo"]}}
+   address {{ inventory_hostname["routing"]["lo"] }}
 
 
 auto eth0
@@ -13,7 +13,7 @@ iface mgmt
   address 127.0.0.1/8
   vrf-table auto
 
-{% for interface in hostvars[inventory_hostname]["ports"] -%}
+{% for interface in inventory_hostname["ports"] -%}
 auto {{interface}}
 iface {{interface}}
    mtu 9216
