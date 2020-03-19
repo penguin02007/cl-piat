@@ -3,6 +3,7 @@
   become: true
   roles:
   - oob-mgmt-server
+  environment: "{{ proxy_env }}"
 
 - hosts: netq-ts
   become: true
@@ -10,24 +11,28 @@
   - setup-netq-ts
   - app-grafana
   - app-netbox
+  environment: "{{ proxy_env }}"
 
 - hosts: spines,superspine
   become: true
   roles:
   - setup-switch
   - switch-spine
+  environment: "{{ proxy_env }}"
 
 - hosts: leafs,edge,router
   become: true 
   roles:
   - setup-switch
   - switch-leaf
+  environment: "{{ proxy_env }}"
 
 - hosts: servers-rack1,servers-rack3 
   become: true 
   roles:
   - setup-server
   - server-multitenant
+  environment: "{{ proxy_env }}"
 
 - hosts: servers-rack2 
   become: true 
@@ -39,4 +44,4 @@
     reboot:
       reboot_timeout: 1200
       test_command: mount
-...
+  environment: "{{ proxy_env }}"
