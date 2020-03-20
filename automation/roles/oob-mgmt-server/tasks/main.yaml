@@ -6,15 +6,17 @@
 
 - name: Add Cumulus Repo
   apt_repository:
-    repo: "deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-{{ netq.version }}"
+    repo: "deb https://apps3.cumulusnetworks.com/repos/deb xenial netq-{{ netq.version }}"
     state: present
     update_cache: no
 
 - name: Install Python Depandancy
-  command: "{{ item }}"
+  pip:
+    name: "{{ item }}"
+  executable: /usr/bin/pip3
   loop:
-    - 'pip3 install PyYAML'
-    - 'pip3 install pynetbox==3.4.7'
+    - PyYAML
+    - pynetbox==3.4.7
 
 - name: Install additional host packages
   apt:
