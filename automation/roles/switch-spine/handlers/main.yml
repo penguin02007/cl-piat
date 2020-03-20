@@ -6,8 +6,10 @@
   service:
     name: frr
     state: restarted
+  async: 60
 
 - name: reload frr
   service:
     name: frr
     state: reloaded
+  async: 60
