@@ -4,7 +4,7 @@
     url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
     state: present
 
-- name: Add Cumulus Repo
+- name: Add Cumulus {{ netq.version }} Repo
   apt_repository:
     repo: "deb https://apps3.cumulusnetworks.com/repos/deb xenial netq-{{ netq.version }}"
     state: present
@@ -30,4 +30,11 @@
     - iproute
     - iproute2
     - netq-agent
+    - netq-apps
     - python3-pip
+
+- name: Start NetQ
+  command: "{{ item }}"
+  loop:
+    - systemctl enable netq-agent
+    - systemctl start netq-agent
