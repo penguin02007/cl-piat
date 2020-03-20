@@ -5,14 +5,14 @@ echo "  Running Extra_Server_Config.sh"
 echo "#################################"
 if [ "$HOSTNAME" != netq-ts ]; then
   sudo su
+  echo -e "export http_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
+  echo -e "export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
+  source ~/.bashrc
 
   useradd cumulus -m -s /bin/bash
   echo "cumulus:CumulusLinux!" | chpasswd
   usermod -aG sudo cumulus
   echo "cumulus ALL=(ALL) NOPASSWD:ALL" | tee --append /etc/sudoers.d/20_cumulus
-
-  echo "export http_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
-  echo -e "export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
 
   #Test for Debian-Based Host
   which apt &> /dev/null
