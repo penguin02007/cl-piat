@@ -2,6 +2,8 @@
 proxy_env:
   http_proxy: 'http://pkg.proxy.prod.jp.local:10080'
   https_proxy: 'http://pkg.proxy.prod.jp.local:10080'
+netq:
+  version: 2.4
 node:
   exit01:
     mlag:
