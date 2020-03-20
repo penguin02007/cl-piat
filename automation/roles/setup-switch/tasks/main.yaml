@@ -1,4 +1,12 @@
 ---
+- name: Setup Authorized Keys
+  copy:
+    src: authorized_keys
+    dest: /home/cumulus/.ssh/authorized_keys
+    owner: cumulus
+    group: cumulus
+    mode: 0700
+
 - name: Set IPv4 L4 hashing
   sysctl:
     name: net.ipv4.fib_multipath_hash_policy
@@ -14,10 +22,10 @@
     - systemctl enable ntp@mgmt
     - systemctl start ntp@mgmt
 
-- name: Remove NetQ1.4 
-  apt:
-    name: ['cumulus-netq','netq-agent','netq-apps']
-    state: absent
+#- name: Remove NetQ1.4
+#  apt:
+#    name: ['cumulus-netq','netq-agent','netq-apps']
+#    state: absent
 
 - name: Add Cumulus Apt Key
   apt_key:
