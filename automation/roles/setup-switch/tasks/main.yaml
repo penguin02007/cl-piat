@@ -26,11 +26,11 @@
 
 - name: Add Cumulus Repo
   apt_repository:
-    repo: deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-2.0 
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-2.4
     state: present
     update_cache: no
 
-- name: Install NetQ2.0
+- name: Install NetQ
   apt:
     name: cumulus-netq
     update_cache: yes
@@ -39,11 +39,6 @@
   copy:
     src: netq20.yml
     dest: /etc/netq/config.d/netq-overwrite.yml 
-
-#- name: copy netq config file
-#  copy:
-#    src: netq14.yml
-#    dest: /etc/netq/netq.yml 
 
 - name: Configure NetQ in management VRF
   command: "{{item}}"
