@@ -5,6 +5,7 @@ netq-agent:
   server: 192.168.200.250 
 netq-cli:
   vrf: mgmt
+  api-logging: true
   auth: true
   endpoint: gateway
   opid: 0

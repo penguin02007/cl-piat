@@ -6,6 +6,7 @@ netq-agent:
 netq-cli:
   vrf: mgmt
   auth: true
+  api-logging: true
   endpoint: gateway
   opid: 0
   password: admin  # >> optional
