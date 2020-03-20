@@ -8,6 +8,7 @@ if [ "$HOSTNAME" != netq-ts ]; then
   echo -e "export http_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
   echo -e "export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
   source ~/.bashrc
+  echo "nameserver 100.79.223.108" >> /etc/resolvconf/resolv.conf.d/head
 
   useradd cumulus -m -s /bin/bash
   echo "cumulus:CumulusLinux!" | chpasswd
