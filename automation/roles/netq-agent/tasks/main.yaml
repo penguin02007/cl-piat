@@ -4,7 +4,7 @@
     url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
     state: present
 
-- name: Add Cumulus {{ netq.version }} Repo
+- name: Add {{ ansible_distribution_release }} {{ netq.version }} Repo
   apt_repository:
     repo: "deb https://apps3.cumulusnetworks.com/repos/deb {{ ansible_distribution_release }} netq-{{ netq.version }}"
     state: present
@@ -12,7 +12,7 @@
   when:
     - ansible_distribution != "Cumulus Linux"
 
-- name: Add Cumulus {{ netq.version }} Repo
+- name: Add CumulusLinux-3 {{ netq.version }} Repo
   apt_repository:
     repo: "deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-{{ netq.version }}"
     state: present
@@ -31,7 +31,7 @@
 
 - name: Copy NetQ Config
   copy:
-    src: netq20.yml
+    src: netq.yml
     dest: /etc/netq/config.d/netq-overwrite.yml
 
 - name: Start NetQ Agent
