@@ -3,6 +3,7 @@
   become: true
   roles:
   - oob-mgmt-server
+  - netq-agent
   environment: "{{ proxy_env }}"
 
 - hosts: netq-ts
