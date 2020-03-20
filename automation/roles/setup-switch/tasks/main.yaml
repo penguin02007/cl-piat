@@ -1,11 +1,19 @@
 ---
+- name: Create ssh Dir
+  file:
+    path: /home/cumulus/.ssh
+    owner: cumulus
+    group: cumulus
+    mode: 0700
+    state: directory
+
 - name: Setup Authorized Keys
   copy:
-    src: authorized_keys
     dest: /home/cumulus/.ssh/authorized_keys
     owner: cumulus
     group: cumulus
     mode: 0700
+    content: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8pCm8sK5WKDiZSPWl1r+7wBmi0KTsg3/el0Jls+Het7xyL2hGKC4NCsU7m9KCp/1xIxI+BSk3iZzyn+eL7Ln1RPc6UtMIPtP6G4d8do04CeTzVGuXCBL8gAiSLfgZvLeXhNMKUzA0YS+PMgFqleEsZnhuckenfKg6F3vTo4a+bZR4NDXKIqRGVKPwhE1znAPD2ReVUfqyu+iOrTzovvHbEARY2w8lJiXUiHwhbvU0QwCMniWxXdXPVT5g4LzVNd5bwSxlr3qZzM1lLQqY2d6npx/+ErCU+MeXvJwgPH/bHDeFReNSeeF0XtywzMAel+1zMgjpUqrrkeEKu5a7SFSl root@oob-mgmt-server'
 
 - name: Set IPv4 L4 hashing
   sysctl:
