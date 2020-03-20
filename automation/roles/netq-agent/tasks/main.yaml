@@ -40,3 +40,5 @@
   loop:
     - systemctl enable netq-agent
     - systemctl start netq-agent
+    - systemctl enable netq-cli
+    - systemctl start netq-cli

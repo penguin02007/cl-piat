@@ -1,15 +1,15 @@
 backend:
-  vrf: mgmt
+  vrf: {{ node.vrf | default('mgmt') }}
 netq-agent:
   port: 31980
   server: 192.168.200.250 
 netq-cli:
-  vrf: mgmt
+  vrf: {{ node.vrf | default('mgmt') }}
   auth: true
   api-logging: true
   endpoint: gateway
   opid: 0
-  password: admin  # >> optional
   port: 32708
   server: 192.168.200.250 
   username: admin   # >> Optional
+  password: admin  # >> optional

@@ -5,6 +5,8 @@ proxy_env:
 netq:
   version: 2.4
 node:
+  oob-mgmt-server:
+    vrf: default
   exit01:
     mlag:
       address: 169.254.1.1/30
