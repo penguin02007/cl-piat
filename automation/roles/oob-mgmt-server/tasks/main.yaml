@@ -10,15 +10,15 @@
     state: present
     update_cache: no
 
-- name: Install Python Depandancy
+- name: Install Python Depndency
   pip:
     name: "{{ item }}"
-  executable: /usr/bin/pip3
+    executable: /usr/bin/pip3
   loop:
     - PyYAML
     - pynetbox==3.4.7
 
-- name: Install additional host packages
+- name: Install Host Depndency
   apt:
     name: "{{ item }}"
     update_cache: yes
