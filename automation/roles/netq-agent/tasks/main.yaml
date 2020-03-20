@@ -1,0 +1,41 @@
+---
+- name: Add Cumulus Apt Key
+  apt_key:
+    url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
+    state: present
+
+- name: Add Cumulus {{ netq.version }} Repo
+  apt_repository:
+    repo: "deb https://apps3.cumulusnetworks.com/repos/deb {{ ansible_distribution_release }} netq-{{ netq.version }}"
+    state: present
+    update_cache: no
+  when:
+    - ansible_distribution is not "Cumulus Linux"
+
+- name: Add Cumulus {{ netq.version }} Repo
+  apt_repository:
+    repo: "deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-{{ netq.version }}"
+    state: present
+    update_cache: no
+  when:
+    - ansible_distribution is "Cumulus Linux"
+
+- name: Install Host Depndency
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  loop:
+    - netq-agent
+    - netq-apps
+
+- name: Copy NetQ Config
+  copy:
+    src: netq20.yml
+    dest: /etc/netq/config.d/netq-overwrite.yml
+
+- name: Start NetQ Agent
+  command: "{{ item }}"
+  loop:
+    - systemctl enable netq-agent
+    - systemctl start netq-agent
