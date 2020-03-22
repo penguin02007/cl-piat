@@ -17,6 +17,8 @@ if [ "$HOSTNAME" != netq-ts ]; then
   if [ "$?" == "0" ]; then
       #These lines will be used when booting on a debian-based box
       echo -e "note: ubuntu device detected"
+      echo -e "Setting nameserver temporary"
+      echo "nameserver 100.79.223.108" > /etc/resolv.conf
       echo -e "Setting Proxy"
       export http_proxy=http://pkg.proxy.prod.jp.local:10080
       export https_proxy=http://pkg.proxy.prod.jp.local:10080
