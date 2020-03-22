@@ -23,8 +23,9 @@ if [ "$HOSTNAME" != netq-ts ]; then
       export http_proxy=http://pkg.proxy.prod.jp.local:10080
       export https_proxy=http://pkg.proxy.prod.jp.local:10080
       #Install LLDP
-      apt-get update -qy && apt-get install lldpd -qy
+      apt-get update -qy && apt-get install lldpd resolvconf -qy
       apt-get install python -qy
+      echo "nameserver 100.79.223.108" > /etc/resolvconf/resolv.conf.d/head
       echo "configure lldp portidsubtype ifname" > /etc/lldpd.d/port_info.conf
 
       #Replace existing network interfaces file
