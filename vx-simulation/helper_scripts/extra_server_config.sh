@@ -20,8 +20,8 @@ if [ "$HOSTNAME" != netq-ts ]; then
       #These lines will be used when booting on a debian-based box
       echo -e "note: ubuntu device detected"
       echo -e "Setting Proxy"
-      http_proxy=http://pkg.proxy.prod.jp.local:10080
-      https_proxy=http://pkg.proxy.prod.jp.local:10080
+      export http_proxy=http://pkg.proxy.prod.jp.local:10080
+      export https_proxy=http://pkg.proxy.prod.jp.local:10080
       #Install LLDP
       apt-get update -qy && apt-get install lldpd -qy
       apt-get install python -qy
