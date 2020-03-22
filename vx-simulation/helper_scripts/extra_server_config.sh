@@ -5,8 +5,6 @@ echo "  Running Extra_Server_Config.sh"
 echo "#################################"
 if [ "$HOSTNAME" != netq-ts ]; then
   sudo su
-  http_proxy=http://pkg.proxy.prod.jp.local:10080
-  https_proxy=http://pkg.proxy.prod.jp.local:10080
   echo " ### ForceIpv4 on Apt"
   echo 'Acquire::ForceIPv4 "true";' > /etc/apt/apt.conf.d/99force-ipv4
   echo "nameserver 100.79.223.108" >> /etc/resolv.conf
@@ -21,6 +19,9 @@ if [ "$HOSTNAME" != netq-ts ]; then
   if [ "$?" == "0" ]; then
       #These lines will be used when booting on a debian-based box
       echo -e "note: ubuntu device detected"
+      echo -e "Setting Proxy"
+      http_proxy=http://pkg.proxy.prod.jp.local:10080
+      https_proxy=http://pkg.proxy.prod.jp.local:10080
       #Install LLDP
       apt-get update -qy && apt-get install lldpd -qy
       apt-get install python -qy
