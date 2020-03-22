@@ -28,17 +28,16 @@
   - switch-leaf
   environment: "{{ proxy_env }}"
 
-- hosts: servers-rack1,servers-rack3 
+- hosts: servers-rack1,servers-rack2,servers-rack3
   become: true 
   roles:
   - setup-server
   - server-multitenant
   environment: "{{ proxy_env }}"
 
-- hosts: servers-rack2 
+- hosts: servers-rack1,servers-rack2,servers-rack3
   become: true 
   roles:
-  - setup-server
   - server-evpn
   tasks:
   - name: reboot
