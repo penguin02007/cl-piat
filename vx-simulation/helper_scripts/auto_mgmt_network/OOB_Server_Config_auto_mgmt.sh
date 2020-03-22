@@ -93,11 +93,11 @@ echo " ### ForceIpv4 on Apt"
 sudo su -c "echo 'Acquire::ForceIPv4 "true";' > /etc/apt/apt.conf.d/99force-ipv4"
 echo " ### Overwriting DNS Server to 100.79.223.108 ###"
 #Required because the installation of DNSmasq throws off DNS momentarily
-echo "nameserver 100.79.223.108" >> /etc/resolvconf/resolv.conf.d/head
+grep 100.79.223.108 || echo "nameserver 100.79.223.108" >> /etc/resolvconf/resolv.conf.d/head
 
 echo " ### Add http proxy ###"
-echo -e "export http_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
-echo -e "export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
+grep http_proxy  || echo -e "export http_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
+grep https_proxy || echo -e "export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
 source ~/.bashrc
 
 echo " ### Updating APT Repository... ###"

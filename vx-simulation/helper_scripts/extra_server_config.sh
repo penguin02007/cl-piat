@@ -7,8 +7,6 @@ if [ "$HOSTNAME" != netq-ts ]; then
   sudo su
   echo " ### ForceIpv4 on Apt"
   echo 'Acquire::ForceIPv4 "true";' > /etc/apt/apt.conf.d/99force-ipv4
-  echo "nameserver 100.79.223.108" >> /etc/resolv.conf
-
   useradd cumulus -m -s /bin/bash
   echo "cumulus:CumulusLinux!" | chpasswd
   usermod -aG sudo cumulus
@@ -42,7 +40,7 @@ if [ "$HOSTNAME" != netq-ts ]; then
       echo -e "post-up mkdir -p /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
       echo -e "post-up wget -O /home/cumulus/.ssh/authorized_keys http://192.168.200.1/authorized_keys" >> /etc/network/interfaces.d/eth0.cfg
       echo -e "post-up chown -R cumulus:cumulus /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
-
+      echo -e "dns-nameservers 100.79.223.108" >> /etc/network/interfaces.d/eth0.cfg
       echo "retry 1;" >> /etc/dhcp/dhclient.conf
       
   fi
