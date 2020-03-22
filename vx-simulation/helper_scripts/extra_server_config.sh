@@ -5,9 +5,8 @@ echo "  Running Extra_Server_Config.sh"
 echo "#################################"
 if [ "$HOSTNAME" != netq-ts ]; then
   sudo su
-  echo -e "export http_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
-  echo -e "export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
-  source ~/.bashrc
+  http_proxy=http://pkg.proxy.prod.jp.local:10080
+  https_proxy=http://pkg.proxy.prod.jp.local:10080
   echo " ### ForceIpv4 on Apt"
   echo 'Acquire::ForceIPv4 "true";' > /etc/apt/apt.conf.d/99force-ipv4
   echo "nameserver 100.79.223.108" >> /etc/resolv.conf
