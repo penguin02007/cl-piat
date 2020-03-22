@@ -8,12 +8,8 @@ node:
       eth1:
       eth2:
     tenants:
-      tenant1:
-        id: 4001
       tenant2:
         id: 4002
-      tenant3:
-        id: 4003
     l2domains:
       1002:
         prefix-id: 12
@@ -21,7 +17,6 @@ node:
       1003:
         prefix-id: 13
         tenant: tenant2
-
   server04:
     id: 4
     ports:
@@ -31,12 +26,8 @@ node:
       eth1:
       eth2:
     tenants:
-      tenant1:
-        id: 4001
       tenant2:
         id: 4002
-      tenant3:
-        id: 4003
     l2domains:
       1002:
         prefix-id: 12
