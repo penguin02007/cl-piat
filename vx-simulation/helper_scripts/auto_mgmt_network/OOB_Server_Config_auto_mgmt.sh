@@ -21,7 +21,7 @@ REPONAME="cl-piat"
 #Install Automation Tools
 puppet=0
 ansible=1
-ansible_version=2.7.9
+ansible_version=2.9.11
 
 #######################
 
@@ -220,7 +220,7 @@ cat <<EOT >> /home/cumulus/.gitconfig
 EOT
 
 sudo su - cumulus -c '\
-git config --global http.proxy http://pkg.proxy.prod.jp.local:10080
+git config --global http.proxy http://100.66.10.3:10080
 git clone https://github.com/CumulusNetworks/cl-piat.git;
 ansible-playbook /home/cumulus/cl-piat/vx-simulation/helper_scripts/install-runner-live.yaml;\
 '
