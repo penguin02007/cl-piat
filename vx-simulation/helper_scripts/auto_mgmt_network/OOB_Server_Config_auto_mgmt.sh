@@ -45,7 +45,8 @@ install_puppet(){
 
 install_ansible(){
     echo " ### Installing Ansible... ###"
-    apt-get install -qy ansible sshpass libssh-dev python-dev libssl-dev libffi-dev
+    apt-get remove ansible -y
+    apt-get install -qy sshpass libssh-dev python-dev libssl-dev libffi-dev
     pip install pip --upgrade
     pip install setuptools --upgrade
     pip install ansible==$ansible_version --upgrade
@@ -103,7 +104,7 @@ echo " ### Updating APT Repository... ###"
 apt-get update -y
 
 echo " ### Installing Packages... ###"
-apt-get install -y htop isc-dhcp-server tree apache2 vlan git python-pip dnsmasq ifenslave apt-cacher-ng lldpd ntp
+DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confnew" install -y htop isc-dhcp-server tree apache2 vlan git python-pip dnsmasq ifenslave apt-cacher-ng lldpd ntp
 modprobe 8021q
 #modprobe bonding
 echo "8021q" >> /etc/modules
