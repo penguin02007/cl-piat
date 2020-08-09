@@ -20,9 +20,11 @@ EOT
 echo " ###Making cumulus passwordless sudo ###"
 echo "cumulus ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/10_cumulus
 
+# Disable auto login to resolve permissions issue with '/tmp/vagrant-shell'
 echo " ###Auto login cumulus user ###"
-echo "alias='sudo su - cumulus'" >> /home/vagrant/.bash_profile
+echo "alias cumulus='sudo su - cumulus'" >> /home/vagrant/.bash_profile
 # echo "exit" >> /home/vagrant/.bash_profile
+
 #add line to support bonding inside virtualbox VMs
 #sed -i '/.*iface swp.*/a\    #required for traffic to flow on Bonds in Vbox VMs\n    post-up ip link set $IFACE promisc on' /etc/network/interfaces
 
