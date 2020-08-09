@@ -96,8 +96,8 @@ echo " ### Overwriting DNS Server to 100.79.223.108 ###"
 grep 100.79.223.108 /etc/resolvconf/resolv.conf.d/head || echo "nameserver 100.79.223.108" >> /etc/resolvconf/resolv.conf.d/head
 
 echo " ### Add http proxy ###"
-grep http_proxy  ~/.bashrc || echo -e "export http_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
-grep https_proxy ~/.bashrc || echo -e "export https_proxy=http://pkg.proxy.prod.jp.local:10080" >> ~/.bashrc
+grep http_proxy  ~/.bashrc >/dev/null || echo -e "export http_proxy=http://100.66.10.3:10080" >> ~/.bashrc
+grep https_proxy ~/.bashrc >/dev/null || echo -e "export https_proxy=http://100.66.10.3:10080" >> ~/.bashrc
 source ~/.bashrc
 
 echo " ### Updating APT Repository... ###"
